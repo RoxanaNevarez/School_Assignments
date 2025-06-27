@@ -17,7 +17,7 @@ void ascending(int&a, int&b, int&c, int&d)
 	// compares the first integer with the following three integers
 	if (a > b) 
 	{
-	    swap(a,b);
+	        swap(a,b);
 	}
 	if (a > c)
 	{
