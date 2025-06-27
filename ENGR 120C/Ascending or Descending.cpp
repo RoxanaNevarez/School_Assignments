@@ -80,7 +80,7 @@ int main()
 	int w,x,y,z;
 	char ch_one,a,d,ch_two,Y,N;
 	string word; // this only reads up to the first whitespace of the word
-				 // user can enter an abbreviation or half a word and it will still execute the correct command
+		     // user can enter an abbreviation or half a word and it will still execute the correct command
 	cout << "Enter four integers: \n";
 	cin >> w >> x >> y >> z;
 	cout << "Do you want numbers in ascending [a] or descending [d] order?: ";
