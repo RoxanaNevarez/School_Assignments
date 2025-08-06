@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSimScript.xsl"?>
+<runscript xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://jsbsim.sf.net/JSBSimScript.xsd"
+    name="C182 doublet">
+
+  <use aircraft="c182" initialize="c182-init"/>
+  <run start="0.0" end="12" dt="0.0083333">
+
+    <property> simulation/notify-time-trigger </property>
+    <property value="1"> simulation/run_id </property>
+
+    <event name="Trim">
+      <description>Trim at the initial conditions</description>
+      <condition>
+        simulation/sim-time-sec gt 1.0
+      </condition>
+      <set name="fcs/mixture-cmd-norm" value="1.0"/>
+      <set name="ic/vt-fps" value="135.0"/>
+      <set name="ic/h-agl-ft" value="4000.0"/>
+      <set name="simulation/do_simple_trim" value="1"/>
+      <notify>
+        <property>velocities/vc-kts</property>
+        <property>velocities/vt-fps</property>
+        <property>attitude/phi-rad</property>
+        <property>attitude/theta-rad</property>
+        <property>attitude/psi-rad</property>
+      </notify>
+    </event>
+
+    <event name="elevator doublet 1" continuous="true">
+      <description>elevator doublet start</description>
+      <condition>
+		simulation/sim-time-sec ge 3.0
+	  </condition>
+      <set name="fcs/elevator-cmd-norm" value="-0.10"/>
+    </event>
+	
+	<event name="elevator doublet 2" continuous="true">
+      <description>elevator doublet switch</description>
+      <condition>
+		simulation/sim-time-sec ge 5.0
+	  </condition>
+      <set name="fcs/elevator-cmd-norm" value="0.10"/>
+    </event>
+	
+	<event name="elevator doublet 3" continuous="true">
+      <description>elevator doublet end</description>
+      <condition>
+		simulation/sim-time-sec ge 7.0
+	  </condition>
+      <set name="fcs/elevator-cmd-norm" value="0.0"/>
+    </event>
+
+  </run>
+  
+  <output name="c182_output.csv" type="CSV" rate="10">
+	<property caption="latitude (deg)"> position/lat-gc-deg</property>
+	<property caption="longitude (deg)"> position/long-gc-deg</property>
+	<property caption="altitude (ft)"> position/h-sl-ft</property>
+	
+	<property caption="Vt (ft/s)"> velocities/vt-fps</property>
+	<property caption="alpha (deg)"> aero/alpha-deg</property>
+	<property caption="beta (deg)"> aero/beta-deg</property>
+	
+	<property caption="p (rad/s)"> velocities/p-rad_sec</property>
+	<property caption="q (rad/s)"> velocities/q-rad_sec</property>
+	<property caption="r (rad/s)"> velocities/r-rad_sec</property>
+	
+	<property caption="phi (rad)"> attitude/phi-rad</property>
+	<property caption="theta (rad)"> attitude/theta-rad</property>
+	<property caption="psi (rad)"> attitude/psi-rad</property>
+	
+	<property caption="elevator (deg)"> fcs/elevator-pos-deg</property>
+	<property caption="aileron (deg)"> fcs/left-aileron-pos-deg</property>
+	<property caption="rudder (deg)"> fcs/rudder-pos-deg</property>
+	<property caption="flap (deg)"> fcs/flap-pos-deg</property>
+	
+	<property caption="weight (lb)"> inertia/weight-lbs</property>
+	<property caption="engine thrust (lb)"> propulsion/engine/thrust-lbs</property>
+	<property caption="engine power (hp)"> propulsion/engine/power-hp</property>
+	<property caption="prop speed (rev/min)"> propulsion/engine/engine-rpm</property>
+	<property caption="fuel flow (gal/hr)"> propulsion/engine/fuel-flow-rate-gph</property>
+  </output>
+  
+</runscript>

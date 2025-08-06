@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sourceforge.net/JSBSimScript.xsl"?>
+<runscript xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://jsbsim.sf.net/JSBSimScript.xsd"
+    name="T38 aileron doublet">
+
+  <use aircraft="T38" initialize="T38-init"/>
+  <run start="0.0" end="20" dt="0.02">
+
+    <property> simulation/notify-time-trigger </property>
+    <property value="1"> simulation/run_id </property>
+
+    <event name="Trim">
+      <description>Trim at the initial conditions</description>
+      <condition>
+        simulation/sim-time-sec gt 1.0
+      </condition>
+      <set name="ic/mach" value="0.8"/>
+      <set name="ic/h-agl-ft" value="5000.0"/>
+      <set name="simulation/do_simple_trim" value="1"/>
+      <notify>
+        <property>velocities/mach</property>
+        <property>aero/qbar-psf</property>
+        <property>velocities/vc-kts</property>
+        <property>velocities/vt-fps</property>
+        <property>attitude/phi-rad</property>
+        <property>attitude/theta-rad</property>
+        <property>attitude/psi-rad</property>
+      </notify>
+    </event>
+
+    <event name="aileron doublet 1" continuous="true">
+      <description>aileron doublet start</description>
+      <condition>
+		simulation/sim-time-sec ge 5.0
+	  </condition>
+      <set name="fcs/aileron-cmd-norm" value="-0.10"/>
+    </event>
+	
+	<event name="aileron doublet 2" continuous="true">
+      <description>aileron doublet switch</description>
+      <condition>
+		simulation/sim-time-sec ge 9.0
+	  </condition>
+      <set name="fcs/aileron-cmd-norm" value="0.10"/>
+    </event>
+	
+	<event name="aileron doublet 3" continuous="true">
+      <description>aileron doublet end</description>
+      <condition>
+		simulation/sim-time-sec ge 13.0
+	  </condition>
+      <set name="fcs/aileron-cmd-norm" value="0.0"/>
+    </event>
+
+  </run>
+  
+  <output name="T38_output.csv" type="CSV" rate="10">
+	<property caption="altitude (ft)"> position/h-sl-ft</property>
+    <property caption="Mach"> velocities/mach</property>
+	<property caption="Vt (ft/s)"> velocities/vt-fps</property>
+	<property caption="alpha (deg)"> aero/alpha-deg</property>
+	<property caption="beta (deg)"> aero/beta-deg</property>
+    <property caption="vdot (ft/s/s)"> accelerations/vdot-ft_sec2</property>
+
+	<property caption="p (rad/s)"> velocities/p-rad_sec</property>
+	<property caption="q (rad/s)"> velocities/q-rad_sec</property>
+	<property caption="r (rad/s)"> velocities/r-rad_sec</property>
+	
+	<property caption="phi (rad)"> attitude/phi-rad</property>
+	<property caption="theta (rad)"> attitude/theta-rad</property>
+	<property caption="psi (rad)"> attitude/psi-rad</property>
+	
+	<property caption="elevator (rad)"> fcs/elevator-pos-rad</property>
+	<property caption="left aileron (rad)"> fcs/left-aileron-pos-rad</property>
+    <property caption="right aileron (rad)"> fcs/right-aileron-pos-rad</property>
+	<property caption="rudder (rad)"> fcs/rudder-pos-rad</property>
+	<property caption="flap (rad)"> fcs/flap-pos-rad</property>
+	
+	<property caption="weight (lb)"> inertia/weight-lbs</property>
+    <property caption="engine 0 thrust (lb)"> propulsion/engine[0]/thrust-lbs</property>
+    <property caption="engine 1 thrust (lb)"> propulsion/engine[1]/thrust-lbs</property>
+  </output>
+  
+</runscript>

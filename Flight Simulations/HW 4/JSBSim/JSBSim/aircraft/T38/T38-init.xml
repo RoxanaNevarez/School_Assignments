@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<initialize name="T38 init">
+  <vt unit="KTS">         500.0 </vt>
+  <latitude unit="DEG">   33.0  </latitude>
+  <longitude unit="DEG"> -117.0 </longitude>
+  <psi unit="DEG">       90.0  </psi>
+  <altitude unit="FT">     40000.0  </altitude>
+  <gamma unit="DEG">       0.0  </gamma>
+  <running> 0 </running>
+</initialize>
