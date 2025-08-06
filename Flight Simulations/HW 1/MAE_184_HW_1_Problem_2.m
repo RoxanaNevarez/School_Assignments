@@ -50,3 +50,5 @@ grid on;
 xlabel('1-Axis Rotational Rate \omega_1 (deg/s)')
 ylabel('2-Axis Rotational Rate \omega_2 (deg/s)')
 title('Problem 1.2 - Helios Spacecraft Simulation Plot')
+
+![Image](https://github.com/user-attachments/assets/2d573c89-6694-4e5c-bb45-d705e8749ed4) 
