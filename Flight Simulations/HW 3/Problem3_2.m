@@ -1,4 +1,4 @@
-% Problem 3.2 - BSFC Calculation for Cessna 182
+%% Problem 3.2 - BSFC Calculation for Cessna 182
 % Data from Problem 3.1 & Specified Parameter
 man_fuel_flow = [9.4, 10, 10.6, 11.3, 11.9, 12.6, 13.3, 14]; % [gal/hr]
 man_brake_horsepower = [113 122 131 140 147 156 166 175]; % [hp]
